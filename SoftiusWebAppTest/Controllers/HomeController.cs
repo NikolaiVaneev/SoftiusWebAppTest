@@ -59,8 +59,14 @@ namespace SoftiusWebAppTest.Controllers
                     {
                         student.SendOutMessages(Data.Students);
                     }
+                    return GetStudentsStatistic(Data.Students);
                 }
-                return GetStudentsStatistic(Data.Students);
+                else
+                {
+                    _toastNotification.AddWarningToastMessage(Data.ErrorDescription);
+                    return "-1";
+                }    
+                
             }
             else
             {
