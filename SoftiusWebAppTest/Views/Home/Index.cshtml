@@ -1,0 +1,53 @@
+﻿@model SoftiusWebAppTest.Models.HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+    <div class="row">
+        <label asp-for="InputData"></label>
+        <textarea id="input" class="form-control" asp-for="InputData" type="text"></textarea>
+        <span asp-validation-for="InputData" class="text-danger" />
+    </div>
+
+    <div class="row justify-content-center mt-2">
+        <a id="calcBtn" asp-action="Index" class="row btn btn-info">Расчитать</a>
+    </div>
+
+    <div class="row">
+        <label asp-for="OutputData"></label>
+        <textarea id="output" readonly class="form-control" style="height:200px;" asp-for="OutputData" type="text"></textarea>
+    </div>
+</div>
+
+@section Scripts
+{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+
+            const CalcBtn = document.querySelector("#calcBtn");
+            const inputText = document.querySelector("#input");
+            const ouput = document.querySelector("#output");
+
+            function Calc() {
+                $.ajax({
+                type: "POST",
+                data: {"input" : inputText.value}, 
+                url: "/Home/Calc",
+                    success: function (msg) {
+                        ouput.value = msg;
+                    }
+                });
+            };
+
+            CalcBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                Calc();
+            });
+        });
+
+    </script>
+    }
+}
