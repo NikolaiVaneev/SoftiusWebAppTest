@@ -88,7 +88,14 @@ namespace SoftiusWebAppTest.Controllers
                 return "-1";
             }
 
-            result.AppendLine(allOutgoingMessages.Count().ToString());
+
+            if (allOutgoingMessages.Count() < students.Count - 1)
+            {
+                _toastNotification.AddWarningToastMessage("Не все студенты были уведомлены. Проверьте входные параметры");
+                return "-1";
+            }
+
+                result.AppendLine(allOutgoingMessages.Count().ToString());
             foreach (var message in allOutgoingMessages)
             {
                 result.AppendLine($"{message.From.Id} {message.To.Id}");
